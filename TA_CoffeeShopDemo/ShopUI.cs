@@ -1,7 +1,13 @@
 ﻿using System;
 
-class ShopUI
+public class ShopUI
 {
+    static ICustomerRepository _customerRepository;
+    public ShopUI(ICustomerRepository customerRepository)
+    {
+        _customerRepository = customerRepository;
+    }
+
     public Customer CurrentCustomer { get; set; }
 
     public void StartUI()
@@ -21,9 +27,7 @@ class ShopUI
 
     public void MainMenuPage()
     {
-        Console.WriteLine("[1] Login");
-        Console.WriteLine("[2] Create an account");
-        Console.WriteLine("[3] Exit");
+        PrintNavigation();
 
         switch (Int32.Parse(Console.ReadLine()))
         {
@@ -37,6 +41,11 @@ class ShopUI
                 ExitPage();
                 break;
         };
+    }
+
+    private static void PrintNavigation()
+    {
+        Console.WriteLine(String.Format("{0,5} {1,5} {2,5}", "[1] Login", "[2] Create an account", "[3] Exit"));
     }
 
     public void CreateAccountPage()
@@ -53,8 +62,8 @@ class ShopUI
         Console.WriteLine("Create password: ");
         string newPassword = Console.ReadLine();
 
-        Customer NewCustomer = new Customer(newUsername, newFirstname, newPassword);
-        Customer.Customers.Add(NewCustomer);
+        Customer newCustomer = new Customer(newUsername, newFirstname, newPassword);
+        _customerRepository.CreateCustomer(newCustomer);
     }
 
     public void LoginPage()
@@ -68,10 +77,11 @@ class ShopUI
         Console.WriteLine("Enter your password: ");
         string password = Console.ReadLine();
 
-        Customer userMatch = Customer.Customers.Find(c => c.Username == username);
+        Customer userMatch = _customerRepository.GetCustomerByUsername(username);
 
         if (userMatch != null && password == userMatch.Password)
         {
+            CurrentCustomer = userMatch;
             ShopMenuPage();
         }
         else
@@ -97,6 +107,18 @@ class ShopUI
         Console.Clear();
         Console.WriteLine("Goodbye! Exiting app...");
         Environment.Exit(0);
+    }
+
+    public void PrintReceipt()
+    {
+        Console.WriteLine("YOUR BILL: ");
+        foreach (CartItem item in CurrentCustomer.Cart.Products)
+        {
+            Console.WriteLine($"{item.Product.Name}: {item.Product.Price} X {item.Quantity}: {item.Product.Price * item.Quantity}");
+            CurrentCustomer.Cart.SubTotal += item.Product.Price;
+        }
+
+        Console.WriteLine($"\n\nTOTAL: {CurrentCustomer.Cart.SubTotal}");
     }
 
 

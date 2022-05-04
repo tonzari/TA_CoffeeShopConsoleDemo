@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-class ShoppingCart
+public class ShoppingCart
 {
     public List<CartItem> Products = new List<CartItem>();
     public decimal SubTotal { get; set; }

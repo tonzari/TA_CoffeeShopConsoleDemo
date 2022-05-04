@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-class ShopMenu
+public class ShopMenu
 {
     public static List<Product> Products = new List<Product>()
     {

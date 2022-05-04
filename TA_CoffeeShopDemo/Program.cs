@@ -2,19 +2,15 @@
 {
     class Program
     {
+        static ICustomerRepository _customerRepository;
         static void Main(string[] args)
         {
-            //INIT and TESTING
+            _customerRepository = new MockCustomerRepository();
+
             ShopMenu shopMenu = new ShopMenu();
-            Customer testCustomer = new Customer("bigdog123", "Anya", "12345");
-            Customer.Customers.Add(testCustomer);
-            ShopUI ui = new ShopUI();
-            ui.CurrentCustomer = testCustomer;
+            ShopUI ui = new ShopUI(_customerRepository);
 
             ui.StartUI();
-
-
-
 
             /*
              * 

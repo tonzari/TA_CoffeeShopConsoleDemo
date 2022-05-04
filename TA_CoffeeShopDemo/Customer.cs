@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 
-class Customer
+public class Customer
 {
-    public static List<Customer> Customers = new List<Customer>();
     public Customer(string username, string firstName, string password)
     {
         Username = username;

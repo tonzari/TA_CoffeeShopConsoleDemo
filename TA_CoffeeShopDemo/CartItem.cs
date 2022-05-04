@@ -1,4 +1,4 @@
-﻿class CartItem
+﻿public class CartItem
 {
     public CartItem(Product product, int quantity)
     {

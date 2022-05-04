@@ -1,4 +1,4 @@
-﻿class Product
+﻿public class Product
 {
     public Product(string name, string category, decimal price)
     {
