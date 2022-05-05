@@ -2,33 +2,24 @@
 {
     class Program
     {
-        static ICustomerRepository _customerRepository;
+        static ICustomerRepository _customerDB; // A single instance of the customer "database" to use across the program. Passed into UI.
+
         static void Main(string[] args)
         {
-            _customerRepository = new MockCustomerRepository();
+            _customerDB = new MockCustomerRepository();
 
-            ShopMenu shopMenu = new ShopMenu();
-            ShopUI ui = new ShopUI(_customerRepository);
-
-            ui.StartUI();
-
-            /*
-             * 
-            testCustomer.Cart.Products.Add(new CartItem(shopMenu.Products[0], 4));
-            testCustomer.Cart.Products.Add(new CartItem(shopMenu.Products[3], 1));
-            testCustomer.Cart.Products.Add(new CartItem(shopMenu.Products[4], 3));
-            testCustomer.Cart.Products.Add(new CartItem(shopMenu.Products[1], 1));
-
-            Console.WriteLine("YOUR BILL: ");
-            foreach (CartItem item in testCustomer.Cart.Products)
-            {
-                Console.WriteLine($"{item.Product.Name}: {item.Product.Price} X {item.Quantity}: {item.Product.Price * item.Quantity}");
-                testCustomer.Cart.SubTotal += item.Product.Price;
-            }
-
-            Console.WriteLine($"\n\nTOTAL: {testCustomer.Cart.SubTotal}");
-            
-             */
+            ShopUI ui = new ShopUI(_customerDB);
+            ui.Start();
         }
     }
 }
+
+
+// TODO
+/*
+ * Consider moving to a State Machine. 
+ * I think that each UI page could be a finite state.
+ * Upon entering each state, do some housekeeping with the console design.
+ * Consider a cursor to navigate the 'page'. The cursor behaviour can change depending on page state. 
+ * 
+ */

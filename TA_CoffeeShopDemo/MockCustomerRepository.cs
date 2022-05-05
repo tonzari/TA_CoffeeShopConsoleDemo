@@ -21,6 +21,9 @@ public class MockCustomerRepository : ICustomerRepository
 
     public void CreateCustomer(Customer customer)
     {
+        // TODO
+        // make sure username is unique
+
         AllCustomers.Add(customer);
     }
 

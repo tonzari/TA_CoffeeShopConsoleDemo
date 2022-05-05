@@ -10,7 +10,7 @@ public class ShopUI
 
     public Customer CurrentCustomer { get; set; }
 
-    public void StartUI()
+    public void Start()
     {
         WelcomePage();
         do
@@ -120,10 +120,4 @@ public class ShopUI
 
         Console.WriteLine($"\n\nTOTAL: {CurrentCustomer.Cart.SubTotal}");
     }
-
-
-    //Once logged in, provide menu options:
-    //  1. Place an order (print menu and allow add to cart option),
-    //  2. See Shopping Cart
-    //  3. Exit (stretch goal: see purchase history)
 }
